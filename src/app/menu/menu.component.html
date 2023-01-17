@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">idReports</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul *ngIf="isLogged" class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-home"></i>
+            home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Crea
+          </a>
+          <ul class="dropdown-menu">
+            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Account</a></li>
+            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Cliente</a></li>
+            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Team</a></li>
+            <li *ngIf="!isAdmin"><a class="dropdown-item" href="#">Nuovo Report</a></li>
+          </ul>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a class="nav-link" href="#">Clienti</a>
+        </li>
+        <li *ngIf="!isAdmin && isLogged" class="nav-item">
+          <a class="nav-link" href="#">Clienti</a>
+        </li>
+        <li *ngIf="!isAdmin && isLogged" class="nav-item">
+          <a class="nav-link" href="#">Report</a>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a class="nav-link" href="#">Dipendenti</a>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a class="nav-link" href="#">Team</a>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a class="nav-link" href="#">Report</a>
+        </li>
+        <li *ngIf="isTeamLeader" class="nav-item">
+          <a class="nav-link" href="#">Team</a>
+        </li>
+        <li *ngIf="isTeamLeader" class="nav-item">
+          <a class="nav-link" href="#">Report Colleghi</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link">Benvenuto {{username}}</a>
+        </li>
+
+        <button *ngIf="!isLogged" class="btn btn-outline-success" (click)="login()">Login</button>
+        <button *ngIf="isLogged" class="btn btn-outline-danger" (click)="logout()">Logout</button>
+      </ul>
+    </div>
+  </div>
+</nav>

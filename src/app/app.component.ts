@@ -1,4 +1,5 @@
-import { OAuthModule,AuthConfig } from 'angular-oauth2-oidc';
+import { MessageService } from './services/message.service';
+import { NullValidationHandler,OAuthService,AuthConfig } from 'angular-oauth2-oidc';
 import { Component } from '@angular/core';
 
 
@@ -10,35 +11,85 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'report-front';
 
-  constructor(private oAuthModule: OAuthModule) {}
+  username!: string;
+  isLogged!: boolean;
+  isAdmin!: boolean;
+  isTeamLeader!:boolean;
 
-    authConfig: AuthConfig = {
-      // Url of the Identity Provider
-      issuer: 'http://localhost:8180/realms/idReports',
+  constructor(private oAuthService: OAuthService, private messageService:MessageService) {
+    this.configure();
+  }
 
-      // URL of the SPA to redirect the user to after login
-      redirectUri: window.location.origin,
+  authConfig: AuthConfig = {
+    // Url of the Identity Provider
+    issuer: 'http://localhost:8180/realms/idReports',
 
-      // The SPA's id. The SPA is registerd with this id at the auth-server
-      // clientId: 'server.code',
-      clientId: 'idreports-frontend',
+    // URL of the SPA to redirect the user to after login
+    redirectUri: window.location.origin,
 
-      // Just needed if your auth server demands a secret. In general, this
-      // is a sign that the auth server is not configured with SPAs in mind
-      // and it might not enforce further best practices vital for security
-      // such applications.
-      // dummyClientSecret: 'secret',
+    // The SPA's id. The SPA is registerd with this id at the auth-server
+    // clientId: 'server.code',
+    clientId: 'idreports-frontend',
 
-      responseType: 'code',
+    // Just needed if your auth server demands a secret. In general, this
+    // is a sign that the auth server is not configured with SPAs in mind
+    // and it might not enforce further best practices vital for security
+    // such applications.
+    // dummyClientSecret: 'secret',
 
-      // set the scope for the permissions the client should request
-      // The first four are defined by OIDC.
-      // Important: Request offline_access to get a refresh token
-      // The api scope is a usecase specific one
-      scope: 'openid profile email offline_access',
+    responseType: 'code',
 
-      showDebugInformation: true,
-    };
+    // set the scope for the permissions the client should request
+    // The first four are defined by OIDC.
+    // Important: Request offline_access to get a refresh token
+    // The api scope is a usecase specific one
+    scope: 'openid profile email offline_access',
+
+    showDebugInformation: true,
+  };
+
+  configure(): void {
+    this.oAuthService.configure(this.authConfig);
+    this.oAuthService.tokenValidationHandler = new NullValidationHandler();
+    this.oAuthService.setupAutomaticSilentRefresh();
+    this.oAuthService.loadDiscoveryDocument().then(() => this.oAuthService.tryLogin())
+    .then(() => {
+      if (this.oAuthService.getIdentityClaims()) {
+        this.isLogged = this.getIsLogged();
+        this.isAdmin = this.getIsAdmin();
+        this.isTeamLeader = this.getIsTeamleader();
+        this.username = this.getUsername();
+        this.messageService.sendMessage(this.getUsername());
+      }
+    })
+    ;
+  }
+
+  public getIsLogged(): boolean {
+    return (this.oAuthService.hasValidIdToken() && this.oAuthService.hasValidAccessToken());
+  }
+
+  public getUsername(): string {
+    return this.oAuthService.getIdentityClaims()['preferred_username'];
+  }
+
+  public getIsAdmin(): boolean {
+    const token = this.oAuthService.getAccessToken();
+    const payload = token.split('.')[1];
+    const payloadDecodedJson = atob(payload);
+    const payloadDecoded = JSON.parse(payloadDecodedJson);
+    //console.log(payloadDecoded);
+    return payloadDecoded.realm_access.roles.indexOf('REALM-ADMIN') !== -1;
+  }
+
+  public getIsTeamleader(): boolean {
+    const token = this.oAuthService.getAccessToken();
+    const payload = token.split('.')[1];
+    const payloadDecodedJson = atob(payload);
+    const payloadDecoded = JSON.parse(payloadDecodedJson);
+    //console.log(payloadDecoded);
+    return payloadDecoded.realm_access.roles.indexOf('REALM-TEAMLEADER') !== -1;
+  }
 
 
 }
