@@ -1,3 +1,4 @@
+import { LoginService } from './services/login.service';
 import { MessageService } from './services/message.service';
 import { NullValidationHandler,OAuthService,AuthConfig } from 'angular-oauth2-oidc';
 import { Component } from '@angular/core';
@@ -12,11 +13,14 @@ export class AppComponent {
   title = 'report-front';
 
   username!: string;
+  role!: string;
   isLogged!: boolean;
   isAdmin!: boolean;
   isTeamLeader!:boolean;
 
-  constructor(private oAuthService: OAuthService, private messageService:MessageService) {
+  constructor(private oAuthService: OAuthService,
+     private messageService:MessageService,
+     private loginService:LoginService) {
     this.configure();
   }
 
@@ -29,7 +33,7 @@ export class AppComponent {
 
     // The SPA's id. The SPA is registerd with this id at the auth-server
     // clientId: 'server.code',
-    clientId: 'idreports-frontend',
+    clientId: 'idreports_frontend',
 
     // Just needed if your auth server demands a secret. In general, this
     // is a sign that the auth server is not configured with SPAs in mind
@@ -48,6 +52,7 @@ export class AppComponent {
     showDebugInformation: true,
   };
 
+  //metodo che si attiva appena l'utente è loggato e configura le impostazioni e informazioni iniziali di accesso
   configure(): void {
     this.oAuthService.configure(this.authConfig);
     this.oAuthService.tokenValidationHandler = new NullValidationHandler();
@@ -55,41 +60,13 @@ export class AppComponent {
     this.oAuthService.loadDiscoveryDocument().then(() => this.oAuthService.tryLogin())
     .then(() => {
       if (this.oAuthService.getIdentityClaims()) {
-        this.isLogged = this.getIsLogged();
-        this.isAdmin = this.getIsAdmin();
-        this.isTeamLeader = this.getIsTeamleader();
-        this.username = this.getUsername();
-        this.messageService.sendMessage(this.getUsername());
+        this.isLogged = this.loginService.getIsLogged();
+        this.isAdmin = this.loginService.getRole('REALM-ADMIN');
+        this.isTeamLeader = this.loginService.getRole('REALM-TEAMLEADER');
+        this.username = this.loginService.getUsername();
+        this.messageService.sendMessage(this.username);
+        this.role = this.loginService.stringGetRole();
       }
-    })
-    ;
+    });
   }
-
-  public getIsLogged(): boolean {
-    return (this.oAuthService.hasValidIdToken() && this.oAuthService.hasValidAccessToken());
-  }
-
-  public getUsername(): string {
-    return this.oAuthService.getIdentityClaims()['preferred_username'];
-  }
-
-  public getIsAdmin(): boolean {
-    const token = this.oAuthService.getAccessToken();
-    const payload = token.split('.')[1];
-    const payloadDecodedJson = atob(payload);
-    const payloadDecoded = JSON.parse(payloadDecodedJson);
-    //console.log(payloadDecoded);
-    return payloadDecoded.realm_access.roles.indexOf('REALM-ADMIN') !== -1;
-  }
-
-  public getIsTeamleader(): boolean {
-    const token = this.oAuthService.getAccessToken();
-    const payload = token.split('.')[1];
-    const payloadDecodedJson = atob(payload);
-    const payloadDecoded = JSON.parse(payloadDecodedJson);
-    //console.log(payloadDecoded);
-    return payloadDecoded.realm_access.roles.indexOf('REALM-TEAMLEADER') !== -1;
-  }
-
-
 }

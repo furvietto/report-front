@@ -11,7 +11,7 @@ export class MenuComponent{
   @Input() isLogged!: boolean;
   @Input() isAdmin!: boolean;
   @Input() isTeamLeader!: boolean;
-  @Input() username!: string;
+  @Input() role!: string;
 
   constructor(private loginService:LoginService) {}
 

@@ -16,14 +16,14 @@
             Crea
           </a>
           <ul class="dropdown-menu">
-            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Account</a></li>
-            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Cliente</a></li>
-            <li *ngIf="isAdmin"><a class="dropdown-item" href="#">Nuovo Team</a></li>
+            <li *ngIf="isAdmin"><a class="dropdown-item" routerLink="/createUserAdmin">Nuovo Utente</a></li>
+            <li *ngIf="isAdmin"><a class="dropdown-item" routerLink="/createClientAdmin">Nuovo Cliente</a></li>
+            <li *ngIf="isAdmin"><a class="dropdown-item" routerLink="/createTeamAdmin">Nuovo Team</a></li>
             <li *ngIf="!isAdmin"><a class="dropdown-item" href="#">Nuovo Report</a></li>
           </ul>
         </li>
         <li *ngIf="isAdmin" class="nav-item">
-          <a class="nav-link" href="#">Clienti</a>
+          <a class="nav-link" routerLink="/listaClientAdmin">Clienti</a>
         </li>
         <li *ngIf="!isAdmin && isLogged" class="nav-item">
           <a class="nav-link" href="#">Clienti</a>
@@ -32,7 +32,7 @@
           <a class="nav-link" href="#">Report</a>
         </li>
         <li *ngIf="isAdmin" class="nav-item">
-          <a class="nav-link" href="#">Dipendenti</a>
+          <a class="nav-link" routerLink="/listaUserAdmin">Dipendenti</a>
         </li>
         <li *ngIf="isAdmin" class="nav-item">
           <a class="nav-link" href="#">Team</a>
@@ -49,9 +49,8 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li *ngIf="isLogged" class="nav-item">
-          <a class="nav-link">Benvenuto {{username}}</a>
+          <a class="nav-link">Ruolo {{role}}</a>
         </li>
-
         <button *ngIf="!isLogged" class="btn btn-outline-success" (click)="login()">Login</button>
         <button *ngIf="isLogged" class="btn btn-outline-danger" (click)="logout()">Logout</button>
       </ul>

@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Creation Date</th>
+      <th scope="col">Last Update</th>
+      <th scope="col">Assegna</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{client.name}}</td>
+      <td>{{client.creationDate}}</td>
+      <td>{{client.lastUpdate != null ? client.lastUpdate : null}}</td>
+      <td><button class="btn btn-outline-primary" (click)="assegnaADipendente(client.id)">Assegna</button></td>
+    </tr>
+  </tbody>
+</table>
