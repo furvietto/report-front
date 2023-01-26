@@ -1,0 +1,23 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Creation date</th>
+      <th scope="col">Status</th>
+      <th scope="col">Modifica</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of reports">
+      <td>{{report.title}}</td>
+      <td>{{report.creationDate}}</td>
+      <td>{{report.status}}</td>
+      <td>
+        <div *ngIf="report.status == 'SAVED'">
+          <button (click)="onModify(report)" class="btn btn-outline-warning">Modifica</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

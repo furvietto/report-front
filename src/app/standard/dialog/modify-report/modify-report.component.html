@@ -1,0 +1,19 @@
+
+<div  class="container mt-5">
+  <div class="row">
+   <div class="col-md-6 mx-auto">
+       <h1>Modifica Report</h1>
+       <label for="title" class="form-label">Titolo</label>
+       <div class="form-group mb-3">
+         <input type="text" class="form-control" id="title" placeholder="titolo" [(ngModel)]="title">
+       </div>
+       <label for="body" class="form-label">Descrizione Report</label>
+       <div class="form-group mb-3">
+        <textarea class="form-control" id="body" rows="3" placeholder="descrizione report"  [(ngModel)]="body"></textarea>
+      </div>
+        <div class="col-md-4 mx-auto">
+          <button type="submit" (click)="onSubmit()" class="btn btn-primary col-md-12">Send</button>
+        </div>
+   </div>
+  </div>
+</div>

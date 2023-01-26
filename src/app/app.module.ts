@@ -14,10 +14,17 @@ import { ListComponent } from './admin/client/list/list.component';
 import { CreateComponent } from './admin/client/create/create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from "@angular/material/dialog";
-import { AssignComponent } from './admin/dialog/assign/assign.component';
 import { CreateUserComponent } from './admin/user/create-user/create-user.component';
 import { ListUserComponent } from './admin/user/list-user/list-user.component';
 import { CreateTeamComponent } from './admin/team/create-team/create-team.component';
+import { ListTeamComponent } from './admin/team/list-team/list-team.component';
+import { AssignToTeamComponent } from './admin/dialog/assign-to-team/assign-to-team.component';
+import {MatListModule} from '@angular/material/list';
+import { ViewUserComponent } from './admin/dialog/view-user/view-user.component';
+import { CreateReportComponent } from './standard/report/create-report/create-report.component';
+import { ListReportStandardComponent } from './standard/report/list-report-standard/list-report-standard.component';
+import { ModifyReportComponent } from './standard/dialog/modify-report/modify-report.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -26,13 +33,20 @@ import { CreateTeamComponent } from './admin/team/create-team/create-team.compon
     MenuComponent,
     ListComponent,
     CreateComponent,
-    AssignComponent,
     CreateUserComponent,
     ListUserComponent,
     CreateTeamComponent,
+    ListTeamComponent,
+    AssignToTeamComponent,
+    ViewUserComponent,
+    CreateReportComponent,
+    ListReportStandardComponent,
+    ModifyReportComponent
   ],
   imports: [
     BrowserModule,
+    MatFormFieldModule,
+    MatListModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

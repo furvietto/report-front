@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th *ngIf="!checkIsLeader" scope="col">Assegna</th>
+      <th *ngIf="checkIsLeader" scope="col">Team Leader</th>
+      <th *ngIf="checkIsLeader" scope="col">Rimuovi Team Leader</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.username}}</td>
+      <td *ngIf="!checkIsLeader"><button class="btn btn-outline-primary" (click)="assegnaTeamLeader(user.accountId)">Team Leader</button></td>
+      <td *ngIf="user.leader">Team Leader</td>
+      <td *ngIf="user.leader"><button class="btn btn-outline-danger">Rimuovi Team Leader</button></td>
+    </tr>
+  </tbody>
+</table>

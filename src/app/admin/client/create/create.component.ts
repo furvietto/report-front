@@ -1,5 +1,6 @@
+import { LoginService } from './../../../services/login.service';
 import { ClientService } from './../../../services/client.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client';
 import {MatDialog} from '@angular/material/dialog';
@@ -11,14 +12,24 @@ import { Router } from '@angular/router';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit{
+
+  ngOnInit(): void {
+    if (this.loginService.stringGetRole() != "ADMIN") {
+      let dialogRef = this.dialog.open(ShowMessageComponent,{
+        data: "NON CE PROVà,CHIAMO I CARABINIERI!!!!!!"
+      });
+      this.router.navigateByUrl("/")
+    }
+  }
 
   form!:FormGroup;
 
   constructor(private fb:FormBuilder,
     private clientService:ClientService,
     public dialog:MatDialog,
-    private router: Router) {
+    private router: Router,
+    private loginService:LoginService) {
     this.form = this.fb.group({
       name: this.fb.control('', [Validators.required]),
     })

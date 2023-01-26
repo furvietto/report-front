@@ -12,13 +12,21 @@ export class UserService {
 
   httpOptions = {headers: new HttpHeaders({"Content-Type" : "application/json"})}
 
-  constructor(private httClient:HttpClient) { }
+  constructor(private httpClient:HttpClient) { }
 
   public create(user: User): Observable<any> {
-    return this.httClient.post<any>(this.userURL + "/create",user, this.httpOptions)
+    return this.httpClient.post<any>(this.userURL + "/create",user, this.httpOptions)
   }
 
   public list(): Observable<any[]> {
-    return this.httClient.get<any[]>(this.userURL + "/listUsers", this.httpOptions)
+    return this.httpClient.get<any[]>(this.userURL + "/listUsers", this.httpOptions)
+  }
+
+  public listUserByTeamId(teamId:number): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.userURL + `/getAllUser/${teamId}`,this.httpOptions)
+  }
+
+  public assignTeamLeader(accountId:string):Observable<any> {
+    return this.httpClient.get<any>(this.userURL + `/assignTeamLeader/${accountId}`,this.httpOptions)
   }
 }

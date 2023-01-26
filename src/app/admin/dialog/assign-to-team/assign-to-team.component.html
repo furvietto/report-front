@@ -1,0 +1,18 @@
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Assegna</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let team of teams">
+      <td>{{team.name}}</td>
+      <button class="btn btn-outline-primary" (click)="assign(team.name)">Assegna</button>
+    </tr>
+  </tbody>
+</table>
+
+
+

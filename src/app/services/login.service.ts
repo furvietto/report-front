@@ -28,6 +28,11 @@ export class LoginService {
     return this.oauthService.getIdentityClaims()['preferred_username'];
   }
 
+   //metodo per prendere l'username dell'utente
+   public getAccountId(): string {
+    return this.oauthService.getIdentityClaims()['sub'];
+  }
+
   //metodo che ritorna il ruolo in stringa
   public stringGetRole(): string {
     const token = this.oauthService.getAccessToken();

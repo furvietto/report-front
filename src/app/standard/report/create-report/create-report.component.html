@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="row">
+   <div class="col-md-6 mx-auto">
+     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+       <h1>Crea Report</h1>
+       <label for="title" class="form-label">Titolo</label>
+       <div class="form-group mb-3">
+         <input type="text" class="form-control" formControlName="title" id="title" placeholder="titolo">
+       </div>
+       <label for="body" class="form-label">Descrizione Report</label>
+       <div class="form-group mb-3">
+        <textarea class="form-control" id="body" rows="3" formControlName="body" placeholder="descrizione report"></textarea>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mx-auto">
+          <button type="button" (click)="onSaved()" [disabled]="!form.valid" class="btn btn-danger col-md-12">Bozza</button>
+        </div>
+        <div class="col-md-4 mx-auto">
+          <button type="submit" [disabled]="!form.valid" class="btn btn-primary col-md-12">Crea</button>
+        </div>
+      </div>
+     </form>
+   </div>
+  </div>
+</div>
