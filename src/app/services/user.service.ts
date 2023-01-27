@@ -29,4 +29,18 @@ export class UserService {
   public assignTeamLeader(accountId:string):Observable<any> {
     return this.httpClient.get<any>(this.userURL + `/assignTeamLeader/${accountId}`,this.httpOptions)
   }
+
+  public listAdmin():Observable<any> {
+    return this.httpClient.get<any[]>(this.userURL + `/listReportAdmin`,this.httpOptions)
+  }
+
+  public listReportsTeamLeader(accountId:string):Observable<any> {
+    return this.httpClient.get<any[]>(this.userURL + `/listReportTeamLeader/${accountId}`,this.httpOptions)
+  }
+
+  public listUsersTeamLeader(accountId:string):Observable<any> {
+    return this.httpClient.get<any[]>(this.userURL + `/listUsersTeamLeader/${accountId}`,this.httpOptions)
+  }
+
+
 }

@@ -1,3 +1,4 @@
+import { AssignToClientStandardComponent } from '../../dialog/assign-to-client-standard/assign-to-client-standard.component';
 import { ReportService } from './../../../services/report.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Component } from '@angular/core';
@@ -17,6 +18,8 @@ export class CreateReportComponent {
 
   form!:FormGroup;
 
+  client!:string;
+
   constructor(
     private loginService:LoginService,
     private fb:FormBuilder,
@@ -26,7 +29,8 @@ export class CreateReportComponent {
     ) {
       this.form = this.fb.group({
         title: this.fb.control('', [Validators.required]),
-        body: this.fb.control('', [Validators.required])
+        body: this.fb.control('', [Validators.required]),
+        client:this.fb.control({value:'',disabled:true}, [Validators.required])
       })
     }
 
@@ -37,7 +41,8 @@ export class CreateReportComponent {
         title: this.form.get("title")?.value,
         bodyHtml: this.form.get("body")?.value,
         status: "SENT",
-        creationDate: new Date().toISOString().substring(0,10)
+        creationDate: new Date().toISOString().substring(0,10),
+        clientName: this.client
       }
       this.reportService.create(report).subscribe(
         result => {
@@ -52,7 +57,15 @@ export class CreateReportComponent {
         }
       )
     }
+  }
 
+  onAssign() {
+    let dialogRef = this.dialog.open(AssignToClientStandardComponent);
+      dialogRef.afterClosed().subscribe(
+        result => {
+          this.client = result;
+        }
+      )
   }
 
   onSaved() {
@@ -62,7 +75,8 @@ export class CreateReportComponent {
         title: this.form.get("title")?.value,
         bodyHtml: this.form.get("body")?.value,
         status: "SAVED",
-        creationDate: new Date().toISOString().substring(0,10)
+        creationDate: new Date().toISOString().substring(0,10),
+        clientName: this.client
       }
       this.reportService.create(report).subscribe(
         result => {

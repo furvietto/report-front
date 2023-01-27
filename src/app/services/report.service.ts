@@ -10,7 +10,7 @@ export class ReportService {
 
   constructor(private httpClient:HttpClient) { }
 
-  reportURL= "http://localhost:8080/report/v1/reports";
+  reportURL= "http://localhost:8080/report/v1/report";
 
   httpOptions = {headers: new HttpHeaders({"Content-Type" : "application/json"})}
 
@@ -18,7 +18,7 @@ export class ReportService {
     return this.httpClient.post<any>(this.reportURL + "", report ,this.httpOptions)
   }
 
-  public list(accountId:string): Observable<Report[]> {
+  public listStandard(accountId:string): Observable<Report[]> {
     return this.httpClient.get<Report[]>(this.reportURL + `/listReport/${accountId}`, this.httpOptions)
   }
 

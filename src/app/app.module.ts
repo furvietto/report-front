@@ -25,6 +25,11 @@ import { CreateReportComponent } from './standard/report/create-report/create-re
 import { ListReportStandardComponent } from './standard/report/list-report-standard/list-report-standard.component';
 import { ModifyReportComponent } from './standard/dialog/modify-report/modify-report.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ListReportTeamLeaderComponent } from './teamleader/report/list-report-team-leader/list-report-team-leader.component';
+import { ListTeamMateComponent } from './teamleader/teamMate/list-team-mate/list-team-mate.component';
+import { AssignToClientComponent } from './admin/dialog/assign-to-client/assign-to-client.component';
+import { ListClientStandardComponent } from './standard/client/list-client-standard/list-client-standard.component';
+import { AssignToClientStandardComponent } from './standard/dialog/assign-to-client-standard/assign-to-client-standard.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ViewUserComponent,
     CreateReportComponent,
     ListReportStandardComponent,
-    ModifyReportComponent
+    ModifyReportComponent,
+    ListReportTeamLeaderComponent,
+    ListTeamMateComponent,
+    AssignToClientComponent,
+    ListClientStandardComponent,
+    AssignToClientStandardComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,9 +26,9 @@
           <a class="nav-link" routerLink="/listaClientAdmin">Clienti</a>
         </li>
         <li *ngIf="!isAdmin && isLogged" class="nav-item">
-          <a class="nav-link" href="#">Clienti</a>
+          <a class="nav-link" routerLink="/listaClientStandard">Clienti</a>
         </li>
-        <li *ngIf="!isAdmin && isLogged" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/listaReportStandard">Report</a>
         </li>
         <li *ngIf="isAdmin" class="nav-item">
@@ -37,14 +37,11 @@
         <li *ngIf="isAdmin" class="nav-item">
           <a class="nav-link" routerLink="/listaTeamAdmin">Team</a>
         </li>
-        <li *ngIf="isAdmin" class="nav-item">
-          <a class="nav-link" href="#">Report</a>
+        <li *ngIf="isTeamLeader" class="nav-item">
+          <a class="nav-link" routerLink="/listaTeamMateTeamLeader">Team</a>
         </li>
         <li *ngIf="isTeamLeader" class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li *ngIf="isTeamLeader" class="nav-item">
-          <a class="nav-link" href="#">Report Colleghi</a>
+          <a class="nav-link" routerLink="/listaReportTeamLeader">Report Colleghi</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

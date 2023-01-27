@@ -1,3 +1,6 @@
+import { JobService } from './../../../services/job.service';
+import { BindUserClient } from './../../../models/bind-user-client';
+import { AssignToClientComponent } from './../../dialog/assign-to-client/assign-to-client.component';
 import { ClientService } from './../../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { Client} from "../../../models/client";
@@ -16,11 +19,12 @@ export class ListComponent implements OnInit{
 constructor(private clientService: ClientService,
    public dialog:MatDialog,
    private loginService:LoginService,
-   private router: Router) {}
+   private router: Router,
+   private jobService:JobService) {}
 
 ngOnInit(): void {
   if (this.loginService.stringGetRole() != "ADMIN") {
-    let dialogRef = this.dialog.open(ShowMessageComponent,{
+    this.dialog.open(ShowMessageComponent,{
       data: "NON CE PROVà, CHIAMO I CARABINIERI!!!!!!"
     });
     this.router.navigateByUrl("/")
@@ -40,7 +44,25 @@ loadClients(): void {
 }
 
 assegnaADipendente(clientId:any) {
-
+  let dialogRef = this.dialog.open(AssignToClientComponent,{
+  });
+  dialogRef.afterClosed().subscribe(
+    result => {
+      let bindUserClient:BindUserClient = {
+        accountId: result,
+        clientId:clientId,
+        creationDate:new Date().toISOString().substring(0,10),
+      }
+      this.jobService.assign(bindUserClient).subscribe(
+        message => {
+          this.dialog.open(ShowMessageComponent,{
+            data: message.message
+          });
+        },
+      err => console.log(err)
+      )
+    }
+  )
 }
 
 }

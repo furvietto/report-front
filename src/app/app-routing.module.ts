@@ -1,3 +1,5 @@
+import { ListClientStandardComponent } from './standard/client/list-client-standard/list-client-standard.component';
+import { ListReportTeamLeaderComponent } from './teamleader/report/list-report-team-leader/list-report-team-leader.component';
 import { ListUserComponent } from './admin/user/list-user/list-user.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +11,7 @@ import { CreateTeamComponent } from './admin/team/create-team/create-team.compon
 import { ListTeamComponent } from './admin/team/list-team/list-team.component';
 import { CreateReportComponent } from './standard/report/create-report/create-report.component';
 import { ListReportStandardComponent } from './standard/report/list-report-standard/list-report-standard.component';
+import { ListTeamMateComponent } from './teamleader/teamMate/list-team-mate/list-team-mate.component';
 
 
 
@@ -23,6 +26,9 @@ const routes: Routes = [
   {path: 'createTeamAdmin', component:CreateTeamComponent},
   {path: 'createReportStandard', component:CreateReportComponent},
   {path: 'listaReportStandard', component:ListReportStandardComponent},
+  {path: 'listaReportTeamLeader', component:ListReportTeamLeaderComponent},
+  {path: 'listaTeamMateTeamLeader', component:ListTeamMateComponent},
+  {path: 'listaClientStandard', component:ListClientStandardComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

@@ -21,4 +21,8 @@ export class ClientService {
   public create(client: Client): Observable<any> {
     return this.httpClient.post<any>(this.clientURL + "", client ,this.httpOptions)
   }
+
+  public listClientStandard(accountId:string): Observable<Client[]> {
+    return this.httpClient.get<Client[]>(this.clientURL + `/getAllClient/${accountId}`, this.httpOptions)
+  }
 }

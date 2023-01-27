@@ -2,16 +2,26 @@
 <div  class="container mt-5">
   <div class="row">
    <div class="col-md-6 mx-auto">
-       <h1>Modifica Report</h1>
+       <h1 *ngIf="report.status == 'SAVED'">Modifica Report</h1>
+       <h1 *ngIf="report.status == 'SENT'">Report</h1>
        <label for="title" class="form-label">Titolo</label>
        <div class="form-group mb-3">
-         <input type="text" class="form-control" id="title" placeholder="titolo" [(ngModel)]="title">
+         <input type="text" class="form-control" id="title" placeholder="titolo" [disabled]="report.status == 'SENT'" [(ngModel)]="title">
        </div>
        <label for="body" class="form-label">Descrizione Report</label>
        <div class="form-group mb-3">
-        <textarea class="form-control" id="body" rows="3" placeholder="descrizione report"  [(ngModel)]="body"></textarea>
+        <textarea [disabled]="report.status == 'SENT'" class="form-control" id="body" rows="3" placeholder="descrizione report"  [(ngModel)]="body"></textarea>
       </div>
-        <div class="col-md-4 mx-auto">
+
+      <div class="form-group mb-3">
+        <label for="client" class="form-label">Client</label>
+        <input disabled type="text" class="form-control" id="client" placeholder="client" [ngModel]="client">
+      </div>
+
+      <div *ngIf="report.status == 'SAVED'" class="col-md-4 mx-auto">
+        <button  type="button" (click)="onAssign()" class="btn btn-primary mb-5">Assegna a client</button>
+      </div>
+        <div *ngIf="report.status == 'SAVED'" class="col-md-4 mx-auto">
           <button type="submit" (click)="onSubmit()" class="btn btn-primary col-md-12">Send</button>
         </div>
    </div>

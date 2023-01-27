@@ -1,5 +1,6 @@
+import { UserService } from './../../../services/user.service';
 import { LoginService } from 'src/app/services/login.service';
-import { ReportService } from './../../../services/report.service';
+import { ReportService } from '../../../services/report.service';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Report } from 'src/app/models/report';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,22 +16,41 @@ import { ShowMessageComponent } from 'src/app/admin/dialog/show-message/show-mes
 export class ListReportStandardComponent implements OnInit{
 
   constructor(private reportService:ReportService,
+    private userService:UserService,
     public dialog:MatDialog,
     private router: Router,
     private loginService:LoginService) {
   }
 
   ngOnInit(): void {
-    this.loadReports();
+    this.role = this.loginService.stringGetRole()
+    if (this.role == "STANDARD" || this.role == "TEAM-LEADER") {
+      this.loadReportsStandard();
+    }
+    if (this.role == "ADMIN") {
+      this.loadReportsAdmin();
+    }
 }
 
-
+  role!:string;
 
   reports: Report[] = [];
 
-  loadReports(): void {
+
+  loadReportsStandard(): void {
     let accountId = this.loginService.getAccountId();
-    this.reportService.list(accountId).subscribe(
+    this.reportService.listStandard(accountId).subscribe(
+      data => {
+        console.log(data);
+
+        this.reports = data;
+      },
+      err => console.log(err)
+    )
+  }
+
+  loadReportsAdmin(): void {
+    this.userService.listAdmin().subscribe(
       data => {
         this.reports = data;
       },
@@ -49,7 +69,7 @@ export class ListReportStandardComponent implements OnInit{
             this.dialog.open(ShowMessageComponent,{
               data: message.message
             });
-            this.loadReports();
+            this.loadReportsStandard();
           }
         )
       }

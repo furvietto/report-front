@@ -11,7 +11,16 @@
        <div class="form-group mb-3">
         <textarea class="form-control" id="body" rows="3" formControlName="body" placeholder="descrizione report"></textarea>
       </div>
+
+      <div *ngIf="client" class="form-group mb-3">
+        <label for="client" class="form-label">Client</label>
+        <input type="text" class="form-control" formControlName="client" id="client" placeholder="client" [ngModel]="client">
+      </div>
+
       <div class="row">
+        <div class="col-md-4 mx-auto">
+          <button type="button" (click)="onAssign()" class="btn btn-primary mb-5">Assegna a client</button>
+        </div>
         <div class="col-md-4 mx-auto">
           <button type="button" (click)="onSaved()" [disabled]="!form.valid" class="btn btn-danger col-md-12">Bozza</button>
         </div>

@@ -17,20 +17,6 @@ import { AssignToTeamComponent } from '../../dialog/assign-to-team/assign-to-tea
 })
 export class CreateUserComponent implements OnInit{
 
-  ngOnInit(): void {
-    if (this.loginService.stringGetRole() != "ADMIN") {
-      let dialogRef = this.dialog.open(ShowMessageComponent,{
-        data: "NON CE PROVà CHIAMO I CARABINIERI!!!!!!"
-      });
-      this.router.navigateByUrl("/")
-    }
-    this.teamService.list().subscribe(
-    data => {
-      this.teams = data;
-    }
-    )
-  }
-
   teams:Team[] = [];
 
   teamName!:string;
@@ -56,7 +42,7 @@ export class CreateUserComponent implements OnInit{
 
     assignToTeam() {
       if (this.teams.length == 0) {
-        let dialogRef = this.dialog.open(ShowMessageComponent,{
+        this.dialog.open(ShowMessageComponent,{
           data: "CREA PRIMA UN TEAM"
         });
       }
@@ -93,17 +79,31 @@ export class CreateUserComponent implements OnInit{
         },
         err => {
           if (err.status == 409) {
-            let dialogRef = this.dialog.open(ShowMessageComponent,{
+            this.dialog.open(ShowMessageComponent,{
               data: "Utente gia esistente"
             });
           }
           else{
-            let dialogRef = this.dialog.open(ShowMessageComponent,{
+            this.dialog.open(ShowMessageComponent,{
               data: "errore insolito durante la creazione"
             });
           }
         }
       );
      }
+  }
+
+  ngOnInit(): void {
+    if (this.loginService.stringGetRole() != "ADMIN") {
+      let dialogRef = this.dialog.open(ShowMessageComponent,{
+        data: "NON CE PROVà CHIAMO I CARABINIERI!!!!!!"
+      });
+      this.router.navigateByUrl("/")
+    }
+    this.teamService.list().subscribe(
+    data => {
+      this.teams = data;
+    }
+    )
   }
 }

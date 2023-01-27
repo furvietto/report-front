@@ -1,0 +1,17 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Assegna</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{client.name}}</td>
+      <td>
+        <button class="btn btn-outline-primary" (click)="assign(client.name)">Assegna</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

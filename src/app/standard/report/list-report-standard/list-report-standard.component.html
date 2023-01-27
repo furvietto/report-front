@@ -1,20 +1,30 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th *ngIf="role == 'ADMIN'" scope="col">Username</th>
       <th scope="col">Title</th>
       <th scope="col">Creation date</th>
       <th scope="col">Status</th>
+      <th scope="col">Cliente</th>
       <th scope="col">Modifica</th>
+      <th scope="col">Visualizza</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let report of reports">
+      <td *ngIf="role == 'ADMIN'">{{report.username}}</td>
       <td>{{report.title}}</td>
       <td>{{report.creationDate}}</td>
       <td>{{report.status}}</td>
+      <td>{{report.clientName}}</td>
       <td>
         <div *ngIf="report.status == 'SAVED'">
           <button (click)="onModify(report)" class="btn btn-outline-warning">Modifica</button>
+        </div>
+      </td>
+      <td>
+        <div *ngIf="report.status == 'SENT'">
+          <button (click)="onModify(report)" class="btn btn-outline-warning">Visualizza</button>
         </div>
       </td>
     </tr>

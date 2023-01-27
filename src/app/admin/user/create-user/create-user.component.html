@@ -25,7 +25,7 @@
       </div>
       <div *ngIf="teamName" class="form-group mb-3">
         <label for="team" class="form-label">Team</label>
-        <input type="team" class="form-control" formControlName="team" id="team" placeholder="team" [ngModel]="teamName">
+        <input type="text" class="form-control" formControlName="team" id="team" placeholder="team" [ngModel]="teamName">
       </div>
       <div>
         <button type="button" (click)="assignToTeam()" class="btn btn-primary mb-5">Assegna a team</button>
